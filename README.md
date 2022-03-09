@@ -1,6 +1,6 @@
 # Grasp Configuration for Robotics
 
-A simple Grasp Configuration application with for robotics to pick up objects - developed using React, Node, Express and MongoDB.
+A simple Grasp Configuration web application for robotics to pick up objects - developed using React hooks, Node, Express, MongoDB and Docker.
 
 #### What you need to run this code
 1. Node (13.12.0)
