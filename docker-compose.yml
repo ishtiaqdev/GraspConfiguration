@@ -1,0 +1,52 @@
+# Run docker-compose build
+# Run docker-compose up
+# Live long and prosper
+
+version: '3.3'
+
+services:
+
+  node:
+    container_name: graspconfiguration
+    image: graspconfig
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/graspconfiguration
+      - '/graspconfiguration/node_modules'
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+      - MONGO_URI=mongodb://mongod:27017/graspconfig
+    ports:
+      - "3000:3000"
+    links:
+      - mongo
+    depends_on: 
+      - mongo
+    environment:
+      WAIT_HOSTS: mongo:27017
+    networks:
+      - graspconfiguration-network
+    
+    stdin_open: true
+    
+  # No authentication is provided here because I have not used any authentication!
+  mongo:
+    container_name: mongo
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes: 
+      - mongodbdata:/data/graspconfig
+    restart: always
+    networks:
+      - graspconfiguration-network
+
+volumes: 
+  mongodbdata:
+
+networks:
+  graspconfiguration-network:
+    driver: bridge
